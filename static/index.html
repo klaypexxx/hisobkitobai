@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yuk hisob-kitob</title>
+<style>
+:root{--bg:#f3f5f1;--card:#fff;--ink:#1c2a22;--mut:#6b7a70;--line:#dde3dc;--acc:#1f6f4a;--acc2:#e9f3ec;--bad:#b3392b;--badbg:#fbeae7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141a16;--card:#1d2620;--ink:#e8efe9;--mut:#93a398;--line:#2e3a32;--acc:#5fc28f;--acc2:#1f3328;--bad:#f08a7c;--badbg:#3a1f1b;color-scheme:dark}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:14px}
+.wrap{max-width:560px;margin:0 auto}
+h1{font-size:22px;margin:4px 0 12px}
+.tot{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.tot div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px}
+.tot small{display:block;color:var(--mut);font-size:12px}
+.tot b{font-size:20px}
+.tot .big{grid-column:1/3;background:var(--acc);color:#fff;border-color:var(--acc)}
+.tot .big small{color:#d6efe0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tot .big{color:#0c1a12}:root:not([data-theme="light"]) .tot .big small{color:#134028}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
+label{display:block;font-size:13px;color:var(--mut);margin:8px 0 3px}
+input[type=text],input[type=tel],input[type=number]{width:100%;font-size:17px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.pr{display:flex;gap:8px}
+.pr button{flex:1;padding:10px;font-size:17px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.pr button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.file{display:block;border:1px dashed var(--line);border-radius:8px;padding:10px;text-align:center;color:var(--mut);cursor:pointer;font-size:15px}
+.file input{display:none}
+.prev{max-width:100%;max-height:120px;border-radius:8px;margin-top:6px;display:block}
+.sum{margin:10px 0;font-size:18px}
+.btn{width:100%;padding:13px;font-size:17px;font-weight:600;border:0;border-radius:10px;background:var(--acc);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn,:root:not([data-theme="light"]) .pr button.on{color:#0c1a12}}
+.btn.s{width:auto;padding:8px 12px;font-size:14px}
+.btn.g{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+.it{display:flex;gap:10px}
+.it img{width:72px;height:72px;object-fit:cover;border-radius:8px;flex:none}
+.it .nop{width:72px;height:72px;border-radius:8px;background:var(--bg);flex:none}
+.it h3{margin:0;font-size:17px}
+.it p{margin:2px 0;color:var(--mut);font-size:14px}
+.st{display:inline-block;font-size:13px;font-weight:600;padding:2px 8px;border-radius:99px}
+.st.p{background:var(--acc2);color:var(--acc)}.st.u{background:var(--badbg);color:var(--bad)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chk{max-width:100%;border-radius:8px;margin-top:8px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tabs button{flex:1;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font-size:15px}
+.tabs button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+.empty{text-align:center;color:var(--mut);padding:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Yuk hisob-kitob</h1>
+<div class="box"><label style="margin-top:0">1 dollar = necha so'm (Milliy bank, sotib olish, 29.10.2026)</label><input type="text" id="rt" inputmode="decimal"></div>
+<div class="tot">
+<div><small>Umumiy kilogram</small><b id="tk">0 kg</b></div>
+<div><small>To'langan</small><b id="tp">0</b><small id="tp2"></small></div>
+<div class="big"><small>Umumiy summa</small><b id="ts">0</b><small id="ts2"></small></div>
+<div><small>10 $ lik yuk</small><b id="k10">0 kg</b></div>
+<div><small>9 $ lik yuk</small><b id="k9">0 kg</b></div>
+</div>
+
+<div class="box">
+<label>Ism</label><input type="text" id="nm" placeholder="Masalan: Boya">
+<label>Telefon raqam</label><input type="tel" id="ph" placeholder="+998 90 123 45 67">
+<label>Kilogramm</label><input type="text" id="kg" inputmode="decimal" placeholder="Masalan: 3,6">
+<label>Har bir kilo narxi (dollar)</label>
+<div class="pr"><button data-p="9">9 $</button><button data-p="10" class="on">10 $</button><button data-p="x">Boshqa</button></div>
+<input type="text" id="cp" inputmode="decimal" placeholder="Narxni yozing" style="display:none;margin-top:8px">
+<label>Yuk rasmi</label>
+<label class="file"><input type="file" accept="image/*" id="im">Rasm olish / tanlash<img id="imp" class="prev" style="display:none"></label>
+<div class="sum">Summa: <b id="cs">0</b><br><b id="cs2" style="color:var(--acc)"></b></div>
+<button class="btn" id="add">Saqlash</button>
+</div>
+
+<div class="tabs"><button data-f="all" class="on">Hammasi</button><button data-f="u">To'lanmagan</button><button data-f="p">To'langan</button></div>
+<div id="list"></div>
+</div>
+
+<script>
+var KEY="yukhisob1",data=[],price=10,fl="all",img="",rate=11980;
+var ver=-1;function load(){fetch("/api/data").then(function(r){return r.json()}).then(function(j){if(j.v===ver)return;ver=j.v;data=j.data||[];if(j.rate>0)rate=j.rate;if(document.activeElement!==$("rt"))$("rt").value=rate;calc();render()}).catch(function(){})}
+function save(){fetch("/api/data",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({data:data,rate:rate,v:ver})}).then(function(r){if(r.status===409){ver=-1;load();alert("Ma'lumot yangilandi (bot qo'shgan). O'zgarishni qayta kiriting.");return}return r.json().then(function(j){ver=j.v})}).catch(function(){alert("Server bilan aloqa yo'q")})}
+function f(n){return (Math.round(n*100)/100+"").replace(".",",")}
+function num(s){return parseFloat(String(s).replace(/\s/g,"").replace(",","."))}
+function so(n){return m(Math.round(n))}
+function m(n){return f(n).replace(/\B(?=(\d{3})+(?!\d))/g," ")}
+function $(i){return document.getElementById(i)}
+function shrink(file,cb){var r=new FileReader();r.onload=function(){var i=new Image();i.onload=function(){var s=Math.min(1,480/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*s;c.height=i.height*s;c.getContext("2d").drawImage(i,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.6))};i.src=r.result};r.readAsDataURL(file)}
+function curP(){return price==="x"?num($("cp").value)||0:price}
+function calc(){var t=(num($("kg").value)||0)*curP();$("cs").textContent=m(t)+" $";$("cs2").textContent=so(t*rate)+" so'm"}
+document.querySelectorAll(".pr button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".pr button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");price=b.dataset.p==="x"?"x":+b.dataset.p;$("cp").style.display=price==="x"?"block":"none";calc()}});
+$("kg").oninput=function(){this.style.borderColor="";calc()};$("cp").oninput=calc;
+$("im").onchange=function(e){var fi=e.target.files[0];if(!fi)return;shrink(fi,function(d){img=d;$("imp").src=d;$("imp").style.display="block"})};
+$("add").onclick=function(){var kg=num($("kg").value);if(!kg){$("kg").focus();$("kg").style.borderColor="var(--bad)";return}
+var p=curP();data.unshift({id:Date.now(),r:rate,nm:$("nm").value.trim(),ph:$("ph").value.trim(),kg:kg,p:p,img:img,paid:false,chk:"",d:new Date().toLocaleDateString("uz")});
+save();$("nm").value="";$("ph").value="";$("kg").value="";$("cp").value="";$("imp").style.display="none";img="";calc();render()};
+document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".tabs button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");fl=b.dataset.f;render()}});
+function find(id){return data.filter(function(x){return x.id===id})[0]}
+function pay(id){var x=find(id);x.paid=!x.paid;save();render()}
+var pend=0;
+function del(id){if(pend===id){data=data.filter(function(x){return x.id!==id});pend=0;save();render()}else{pend=id;render()}}
+function chk(id,inp){var fi=inp.files[0];if(!fi)return;shrink(fi,function(d){find(id).chk=d;find(id).paid=true;save();render()})}
+function render(){var k=0,k10=0,k9=0,s=0,pd=0,su=0,pu=0;data.forEach(function(x){var t=x.kg*x.p,r=x.r||rate;k+=x.kg;if(x.p===10)k10+=x.kg;if(x.p===9)k9+=x.kg;s+=t;su+=t*r;if(x.paid){pd+=t;pu+=t*r}});
+$("tk").textContent=f(k)+" kg";$("ts").textContent=m(s)+" $";$("ts2").textContent=so(su)+" so'm";$("tp").textContent=m(pd)+" $";$("tp2").textContent=so(pu)+" so'm";$("k10").textContent=f(k10)+" kg";$("k9").textContent=f(k9)+" kg";
+var h="";data.filter(function(x){return fl==="all"||(fl==="p"?x.paid:!x.paid)}).forEach(function(x){var t=x.kg*x.p;
+h+='<div class="box"><div class="it">'+(x.img?'<img src="'+x.img+'">':'<div class="nop"></div>')+'<div><h3>'+esc(x.nm||"Ismsiz")+'</h3><p>'+(x.ph?'<a href="tel:'+esc(x.ph)+'" style="color:inherit">'+esc(x.ph)+'</a> · ':'')+x.d+'</p><p>'+f(x.kg)+' kg × '+f(x.p)+' = <b style="color:var(--ink)">'+m(t)+' $</b></p><p>'+so(t*(x.r||rate))+' so\'m</p><span class="st '+(x.paid?'p">To\'langan':'u">To\'lanmagan')+'</span></div></div>'+
+(x.chk?'<img class="chk" src="'+x.chk+'">':'')+
+'<div class="acts"><button class="btn s" onclick="pay('+x.id+')">'+(x.paid?'To\'lanmagan qilish':'To\'landi')+'</button><label class="btn s g" style="margin:0">Chek rasmi<input type="file" accept="image/*" style="display:none" onchange="chk('+x.id+',this)"></label><button class="btn s g" onclick="del('+x.id+')">'+(pend===x.id?'Ha, o\'chirish!':'O\'chirish')+'</button></div></div>'});
+$("list").innerHTML=h||'<div class="empty">Hozircha yozuv yo\'q. Yuqorida birinchi yukni qo\'shing.</div>'}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+$("rt").oninput=function(){var v=num(this.value);if(v>0){rate=v;save()}calc();render()};load();setInterval(load,8000);
+</script>
+</body>
+</html>
